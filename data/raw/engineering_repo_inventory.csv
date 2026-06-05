@@ -1,0 +1,6 @@
+Repository,Language,ActiveBranch,OpenPRs,Vulnerabilities
+auth-service,Python,main,2,0
+gateway-api,Go,main,1,1
+rag-engine,Python,develop,4,0
+data-pipeline,Scala,main,0,3
+frontend-ui,TypeScript,main,3,2

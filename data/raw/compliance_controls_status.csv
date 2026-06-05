@@ -1,0 +1,6 @@
+ControlID,ControlName,Framework,Status,LastAudited
+CC-1.1,Quarterly Access Reviews,SOC 2,Compliant,2026-03-15
+CC-2.1,Weekly Firewall Scan,ISO 27001,Compliant,2026-05-20
+CC-3.2,Biometric Vault Logs,SOC 2,Non-Compliant,2026-04-01
+CC-4.5,Data Backup Frequency,GDPR,Compliant,2026-05-01
+CC-5.1,Vendor Risk Questionnaire,ISO 27001,Compliant,2026-05-15

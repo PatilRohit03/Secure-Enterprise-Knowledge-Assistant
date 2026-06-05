@@ -1,0 +1,23 @@
+[
+  {
+    "method": "POST",
+    "path": "/api/v1/chat",
+    "status_code": 200,
+    "user": "charlie",
+    "timestamp": "2026-06-05T22:00:00Z"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/documents",
+    "status_code": 200,
+    "user": "alice",
+    "timestamp": "2026-06-05T22:01:10Z"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/users",
+    "status_code": 403,
+    "user": "bob",
+    "timestamp": "2026-06-05T22:02:15Z"
+  }
+]

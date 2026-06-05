@@ -1,0 +1,30 @@
+[
+  {
+    "timestamp": "2026-06-05T08:12:00Z",
+    "event": "Unsuccessful Login Attempt",
+    "username": "bob",
+    "ip_address": "192.168.1.45",
+    "status": "Failed"
+  },
+  {
+    "timestamp": "2026-06-05T09:30:15Z",
+    "event": "Resource Access",
+    "username": "alice",
+    "resource": "HR_Salary_Bands_Confidential.pdf",
+    "status": "Success"
+  },
+  {
+    "timestamp": "2026-06-05T10:15:22Z",
+    "event": "API Key Request",
+    "username": "charlie",
+    "client": "gateway-api",
+    "status": "Success"
+  },
+  {
+    "timestamp": "2026-06-05T11:45:00Z",
+    "event": "Resource Access Attempt",
+    "username": "bob",
+    "resource": "HR_Salary_Bands_Confidential.pdf",
+    "status": "Denied"
+  }
+]

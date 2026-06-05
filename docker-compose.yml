@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: secure-enterprise-knowledge-assistant-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - LLM_PROVIDER=mock
+      - DB_PATH=/app/data/sqlite.db
+      - VECTOR_STORE_PATH=/app/data/vector_store
+      - DATA_DIR=/app/data
+    restart: always
+
+  frontend:
+    build: .
+    container_name: secure-enterprise-knowledge-assistant-frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    environment:
+      - API_URL=http://backend:8000/api/v1
+    command: ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    restart: always

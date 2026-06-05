@@ -1,0 +1,23 @@
+[
+  {
+    "action": "role_change",
+    "operator": "admin",
+    "target_user": "bob",
+    "old_role": "Finance",
+    "new_role": "Admin",
+    "timestamp": "2026-06-04T14:20:00Z"
+  },
+  {
+    "action": "document_deletion",
+    "operator": "admin",
+    "target_doc": "finance_forecast_2025.pdf",
+    "timestamp": "2026-06-04T16:05:10Z"
+  },
+  {
+    "action": "policy_bypass",
+    "operator": "david",
+    "bypass_id": "BY-901",
+    "reason": "Emergency incident triage",
+    "timestamp": "2026-06-05T01:30:00Z"
+  }
+]

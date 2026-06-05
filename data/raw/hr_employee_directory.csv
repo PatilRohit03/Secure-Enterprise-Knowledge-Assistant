@@ -1,0 +1,6 @@
+EmployeeID,Name,Department,Role,WorkEmail
+EMP001,John Doe,HR,HR Manager,john.doe@corp.com
+EMP002,Jane Smith,Finance,Controller,jane.smith@corp.com
+EMP003,Bob Johnson,Engineering,Tech Lead,bob.johnson@corp.com
+EMP004,Alice Williams,Security,Security Analyst,alice.williams@corp.com
+EMP005,Charlie Brown,Engineering,Software Engineer,charlie.brown@corp.com

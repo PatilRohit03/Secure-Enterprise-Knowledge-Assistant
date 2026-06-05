@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2026-06-05T21:00:00Z",
+    "service": "rag-engine",
+    "cpu_percent": 34.2,
+    "memory_used_mb": 512,
+    "latency_ms": 122.4
+  },
+  {
+    "timestamp": "2026-06-05T21:05:00Z",
+    "service": "rag-engine",
+    "cpu_percent": 56.1,
+    "memory_used_mb": 528,
+    "latency_ms": 195.8
+  },
+  {
+    "timestamp": "2026-06-05T21:10:00Z",
+    "service": "rag-engine",
+    "cpu_percent": 41.5,
+    "memory_used_mb": 520,
+    "latency_ms": 150.1
+  }
+]

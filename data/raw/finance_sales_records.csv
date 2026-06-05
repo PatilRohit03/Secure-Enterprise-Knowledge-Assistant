@@ -1,0 +1,6 @@
+TransactionID,Client,Amount,Region,Status
+TX1001,Apex Corp,150000,US-East,Paid
+TX1002,ByteSize LLC,45000,US-West,Paid
+TX1003,Core Industries,220000,EMEA,Pending
+TX1004,Delta Ltd,85000,APAC,Paid
+TX1005,Echo Solutions,12000,US-East,Refunded

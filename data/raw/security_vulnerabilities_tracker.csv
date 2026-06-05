@@ -1,0 +1,6 @@
+CVE_ID,Severity,TargetSystem,Status,Owner
+CVE-2026-1011,Critical,Authentication Service,Unpatched,Charlie Brown
+CVE-2026-1012,High,Public Gateway,In Progress,Alice Williams
+CVE-2026-1013,Medium,User DB Cache,Patched,Bob Johnson
+CVE-2026-1014,High,Analytics API,Unpatched,Alice Williams
+CVE-2026-1015,Low,Static File Server,Patched,Charlie Brown

@@ -1,0 +1,16 @@
+[
+  {
+    "incident_id": "INC-889",
+    "summary": "Brute force attack on admin endpoint",
+    "status": "Mitigated",
+    "owner": "Alice Williams",
+    "resolved_at": "2026-06-05T10:45:00Z"
+  },
+  {
+    "incident_id": "INC-890",
+    "summary": "Anomalous database query volume",
+    "status": "Investigating",
+    "owner": "David Compliance",
+    "resolved_at": null
+  }
+]
