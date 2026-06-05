@@ -877,6 +877,13 @@ def on_startup():
         except Exception as e:
             logger.error(f"Bootstrap seeding failed: {e}. Check generate_dataset.py.")
             
+    # Print clean links to console
+    print("\n" + "="*80)
+    print("🚀 SECURE ENTERPRISE KNOWLEDGE ASSISTANT API IS RUNNING!")
+    print("   👉 API Base URL:                  http://localhost:8000")
+    print("   👉 Interactive API Docs (Swagger): http://localhost:8000/docs")
+    print("="*80 + "\n")
+            
     # Metric logger daemon thread
     def metrics_daemon():
         while True:

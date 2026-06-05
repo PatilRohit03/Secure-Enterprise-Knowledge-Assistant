@@ -14,10 +14,25 @@ An AI-powered enterprise knowledge retrieval platform that enables secure queryi
 - Audit Logging
 - Streamlit Dashboard
 
+## Tech Stack
+
+- Python
+- FastAPI
+- Streamlit
+- FAISS
+- BM25
+- Sentence Transformers
+- Cross-Encoder Re-ranker
+- SQLite
+- Pandas
+- PyPDF
+- Docker
+
+
 A technically strong, practical, and understandable Secure Enterprise Knowledge Assistant with strict Role-Based Access Control (RBAC) and a lightweight agent-inspired workflow where a router directs queries to domain-specific retrieval logic. Designed as an AIML Capstone project.
 
 > **Project Explanation Statement:**
-> Developed a production-grade Secure Enterprise Knowledge Assistant supporting multi-source enterprise data ingestion (PDF, CSV, JSON, SQL), Hybrid Retrieval (FAISS + BM25), Role-Based Access Control, Query Routing, explainable Citations, Confidence Scoring, audit logging, and hallucination mitigation. The system enforces RBAC before retrieval, ensuring restricted content never enters the generation context. The RAG Pipeline provides secure, grounded, and traceable responses suitable for enterprise environments.
+> Developed a Secure Enterprise Knowledge Assistant supporting multi-source enterprise data ingestion (PDF, CSV, JSON, SQL), Hybrid Retrieval (FAISS + BM25), Role-Based Access Control, Query Routing, explainable Citations, Confidence Scoring, audit logging, and hallucination mitigation. The system enforces RBAC before retrieval, ensuring restricted content never enters the generation context. The RAG Pipeline provides secure, grounded, and traceable responses suitable for enterprise environments.
 
 ---
 
@@ -32,7 +47,7 @@ graph TD
     User([User Query]) --> Auth[JWT & RBAC Session Check]
     Auth --> Router[Query Router Logic]
     
-    subgraph Specialist Retrieval Logic (Metadata Filtered)
+    subgraph "Specialist Retrieval Logic (Metadata Filtered)"
         Router -- HR Query --> HR_Retrieval[HR Specialist Retrieval]
         Router -- Finance Query --> Fin_Retrieval[Finance Specialist Retrieval]
         Router -- Security Query --> Sec_Retrieval[Security Specialist Retrieval]
@@ -77,11 +92,6 @@ graph TD
    - **Trade-off**: Free, completely offline, and keyless setup, but introduces a 1-2 second latency per query.
    - **Interview Explanation**: "Using local sentence-transformers models makes the system self-contained and free. In a production pipeline, we would host these models on a GPU-accelerated server like Triton Inference Server or vLLM to achieve sub-100ms latency."
 
-4. **Web Audio API Sound Engine**:
-   - **Choice**: UI sound effects are synthesized dynamically in the browser using the JavaScript Web Audio API.
-   - **Trade-off**: No static MP3 files to load or host, but limited to synthesized retro square/sine wave sound effects.
-   - **Interview Explanation**: "Dynamic browser synthesis ensures audio effects always play reliably without breaking due to static file path resolution issues in web containers."
-
 ---
 
 ## 🚧 Challenges Faced & Resolved
@@ -101,6 +111,8 @@ graph TD
 - **FAISS Scaling**: FAISS metadata filtering works well for small datasets but would require a more scalable document permission architecture for enterprise-scale deployments.
 - **CPU Inference Latency**: Local embedding and re-ranking models increase latency compared to dedicated GPU-hosted inference services.
 - **Synthetic Datasets**: The current system runs on synthetic data generated for demonstration purposes.
+- **Quantitative/Aggregation Queries**: Standard RAG retrieves individual text passages and cannot perform database-level math. Questions like *"How many documents are there?"* or *"How many employees are present?"* will be caught by the Groundedness Guard and safely return *"Insufficient evidence found"* to prevent hallucination.
+
 
 ---
 
@@ -115,32 +127,72 @@ graph TD
 
 ## 🛠️ Local Installation & Run Guide
 
-### Step 1: Install Dependencies
+### Option A: Standard Local Run
+#### Step 1: Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 2: Seed & Boot the Backend
-The backend automatically runs the dataset generator on first boot. If you want to run it manually:
+#### Step 2: Seed & Boot the Backend
+The backend automatically seeds the database on first boot. If you want to run the seeder manually:
 ```bash
 python generate_dataset.py
 ```
-Then start the server:
+Then start the API backend server:
 ```bash
 python main.py
 ```
-FastAPI runs at `http://localhost:8000`.
+* **API Base URL**: `http://localhost:8000`
+* **Interactive API Docs (Swagger UI)**: `http://localhost:8000/docs`
 
-### Step 3: Start the Streamlit Dashboard
+#### Step 3: Start the Streamlit Dashboard
+To run the Streamlit frontend client (run as a Python module to prevent launcher path conflicts on Windows):
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
-Streamlit runs at `http://localhost:8501`.
+* **Streamlit Dashboard**: `http://localhost:8501`
 
-### Step 4: Run Tests
+#### Step 4: Run Tests
+To run the automated test suite:
 ```bash
-pytest tests/test_platform.py -v
+python -m pytest tests/test_platform.py -v
 ```
+
+---
+
+### Option B: Containerized Run (Via Docker)
+If you have **Docker Desktop** installed and running on your system, you can boot the entire platform (FastAPI + Streamlit + Seeding script) in a containerized environment with a single command:
+
+```bash
+docker-compose up --build
+```
+* **Streamlit Dashboard**: `http://localhost:8501`
+* **Interactive API Docs**: `http://localhost:8000/docs`
+* *Note: The local `./data` folder is mounted as a persistent volume to preserve audit logs and uploaded documents even when the containers are stopped.*
+
+---
+
+## 💡 Recommended Test Queries
+To guide your evaluation of the RAG retrieval, security permissions, and guardrails, try these test queries in the **Chat Assistant**:
+
+### 1. Authorized Informational Queries (RAG & Citations)
+* **General Query**: `"What are the Python coding guidelines?"` (Retrieves public engineering file).
+* **HR Query**: `"What is the leave policy?"` (Retrieves internal HR handbook).
+* **Confidential Query** *(Log in as Admin or HR)*: `"What is the salary range for Level 3?"` (Retrieves confidential HR compensation plan).
+
+### 2. Security Clearance Enforcement (Access Denied)
+* **Blocked Department Context**: Log in as `alice` (HR Specialist) and ask: `"What is the operating expense for research in Q2?"` (Since Alice does not have Finance department clearance, access is blocked).
+* **Blocked Intent Routing**: Log in as `bob` (Finance) or `alice` (HR) and ask: `"What did David do on 2026-06-05?"` (Queries involving security audit logs are strictly restricted to Admin/Compliance).
+
+### 3. Hallucination Guardrails (Safely Blocked)
+* **Out-of-Scope Query**: `"Who is the CEO of the company?"` (Expected: Intercepted by the Groundedness Check -> *"Insufficient evidence found"*).
+* **Quantitative Aggregation Query**: `"How many total documents are present?"` (Expected: Standard RAG cannot perform DB counting, so the system rejects it as *"Insufficient evidence found"* rather than hallucinating a guess).
+
+---
+
+## 🎨 Additional UI Enhancements
+
+- **Web Audio API Sound Engine**: UI sound effects are dynamically synthesized in the browser using the JavaScript Web Audio API. This ensures audio feedback plays reliably without breaking due to static file path resolution issues in web containers, while keeping the deployment footprint minimal.
 
 ---
 
